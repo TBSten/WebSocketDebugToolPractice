@@ -4,8 +4,7 @@ plugins {
     `kotlin-dsl`
 }
 
-// TODO
-group = "com.example.mylibrary.buildLogic"
+group = "me.tbsten.prac.websocketdebugtool.buildlogic"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
