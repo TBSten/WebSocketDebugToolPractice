@@ -11,6 +11,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+
+    alias(libs.plugins.kotlinx.rpc)
 }
 
 kotlin {
@@ -73,6 +75,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(projects.shared)
+            implementation(libs.kotlinx.rpc.client)
+            implementation(libs.kotlinx.rpc.serialization)
+            implementation(libs.kotlinx.rpc.ktor.client)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
