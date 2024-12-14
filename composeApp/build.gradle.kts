@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
 
     alias(libs.plugins.kotlinx.rpc)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
