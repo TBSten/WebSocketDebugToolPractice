@@ -4,9 +4,6 @@ plugins {
     alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.ktor)
     application
-    alias(libs.plugins.kotlinx.rpc)
-
-    alias(libs.plugins.kotlin.serialization)
 }
 
 group = "me.tbsten.prac.websocketdebugtool"

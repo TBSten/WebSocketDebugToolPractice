@@ -1,7 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.buildLogicLint)
@@ -11,8 +9,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
 
-    alias(libs.plugins.kotlinx.rpc)
-    alias(libs.plugins.kotlin.serialization)
+//    alias(libs.plugins.kotlin.serialization)
+//    alias(libs.plugins.kotlinx.rpc)
 }
 
 kotlin {
@@ -36,27 +34,28 @@ kotlin {
 
     jvm("desktop")
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        moduleName = "composeApp"
-        browser {
-            val rootDirPath = project.rootDir.path
-            val projectDirPath = project.projectDir.path
-            commonWebpackConfig {
-                outputFileName = "composeApp.js"
-                devServer =
-                    (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                        static =
-                            (static ?: mutableListOf()).apply {
-                                // Serve sources to debug inside browser
-                                add(rootDirPath)
-                                add(projectDirPath)
-                            }
-                    }
-            }
-        }
-        binaries.executable()
-    }
+    // FIXME wasm の CIO 実装がないことでクラッシュする
+//    @OptIn(ExperimentalWasmDsl::class)
+//    wasmJs {
+//        moduleName = "composeApp"
+//        browser {
+//            val rootDirPath = project.rootDir.path
+//            val projectDirPath = project.projectDir.path
+//            commonWebpackConfig {
+//                outputFileName = "composeApp.js"
+//                devServer =
+//                    (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+//                        static =
+//                            (static ?: mutableListOf()).apply {
+//                                // Serve sources to debug inside browser
+//                                add(rootDirPath)
+//                                add(projectDirPath)
+//                            }
+//                    }
+//            }
+//        }
+//        binaries.executable()
+//    }
 
     sourceSets {
         val desktopMain by getting
@@ -64,6 +63,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            api(libs.ktor.client.cio)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -74,11 +74,13 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(projects.shared)
-            implementation(libs.kotlinx.rpc.client)
-            implementation(libs.kotlinx.rpc.serialization)
-            implementation(libs.kotlinx.rpc.ktor.client)
-            implementation(libs.ktor.client.core)
+            api(projects.shared)
+            api(libs.kotlinx.rpc.client)
+            api(libs.kotlinx.rpc.serialization)
+            api(libs.kotlinx.rpc.ktor.client)
+            api(libs.ktor.client.core)
+            api(libs.ktor.client.websockets)
+//            api(libs.ktor.client.cio)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

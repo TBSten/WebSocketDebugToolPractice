@@ -8,7 +8,9 @@ plugins {
 
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlinx.rpc)
 }
 
 kotlin {
@@ -47,6 +49,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.rpc.core)
+            implementation(libs.kotlinx.serialization.core)
+            implementation(libs.kotlinx.serialization.json)
         }
     }
 }
