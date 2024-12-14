@@ -78,6 +78,7 @@ kotlin {
             implementation(libs.kotlinx.rpc.client)
             implementation(libs.kotlinx.rpc.serialization)
             implementation(libs.kotlinx.rpc.ktor.client)
+            implementation(libs.ktor.client.core)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
